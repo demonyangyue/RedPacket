@@ -8,32 +8,25 @@ import org.scalatest.BeforeAndAfterAll
 
 class RedPacketGeneratorSpec() extends TestKit(ActorSystem("RedPacketGeneratorSpec")) with ImplicitSender
 with WordSpecLike with Matchers with BeforeAndAfterAll {
-    
-    import RedPacketGenerator._
-    import RedPacketShaker._
+
+  import RedPacketGenerator._
+  import RedPacketClient._
 
 
-    override def afterAll {
-        TestKit.shutdownActorSystem(system)
+  override def afterAll {
+    TestKit.shutdownActorSystem(system)
+  }
+
+
+  "A red packet generator" must {
+    val redPacketGenerator = TestActorRef(Props[RedPacketGenerator])
+
+    "send out a RedPacket after shake" in {
+      redPacketGenerator ! RedPacket
+      expectMsgPF() {
+        case UnopenedRedPacket (amount: Int) => (amount > 0 && amount < 100)
+      }
     }
 
-    "A red packet shaker" must {
-        "Shake  after initialized" in {
-            val redPacketShaker = TestActorRef(Props(classOf[RedPacketShaker], testActor))
-            redPacketShaker.receive(Initialize)
-            expectMsgPF() {
-                case Shake =>
-            }
-        }
-    }
-    
-    "A red packet generator" must {
-        "send out a red packet after shaking" in {
-            val redPacketGenerator = system.actorOf(Props[RedPacketGenerator])
-            redPacketGenerator ! Shake
-            expectMsgPF() {
-                case RedPacket(amount: Int) => (amount > 0 && amount < 100)
-            }
-        }
-    }
+  }
 }
