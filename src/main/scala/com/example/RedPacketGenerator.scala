@@ -1,3 +1,7 @@
+/**
+ * Simulate the red packet server, which generates * red packets based on incoming requests
+ */
+
 package com.example
 
 import akka.actor.{Actor, ActorLogging, Props}
@@ -11,6 +15,7 @@ class RedPacketGenerator extends Actor with ActorLogging {
     def receive = {
         
         case RedPacket => 
+            // generate a random red packet, at most $100 !
             val amount = Random.nextInt(100)
             log.info("Generate a new red packet!")
             sender ! UnopenedRedPacket(amount)

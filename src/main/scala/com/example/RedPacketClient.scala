@@ -1,3 +1,7 @@
+/**
+ * Represent the red packet client, in real word it would be Mobiles
+ */
+
 package com.example
 
 import akka.actor.{Actor, ActorRef, ActorLogging, Props}
@@ -14,11 +18,13 @@ class RedPacketClient(val generator: ActorRef) extends Actor with ActorLogging {
   implicit val askTimeout = Timeout(1.second)
   def receive = {
 
+    // simulate the shake action in Mobile
     case Shake =>
       (generator ? RedPacket) onSuccess {
         case UnopenedRedPacket(amount) => self ! OpenPacket(amount)
       }
 
+        // open the red packet when client explicitly send the "open" request
         case OpenPacket(amount: Int) => 
           context.system.eventStream.publish(Money(amount))
           log.info("Open a red packet, get $%d".format(amount))
