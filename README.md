@@ -15,10 +15,12 @@ git clone https://github.com/demonyangyue/RedPacket
 ```bash
 sbt run
 ```
+
 ### Test
 ```bash
 sbt test
 ```
+
 ### Architecture
 
 ### Further Improvement
