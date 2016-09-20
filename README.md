@@ -22,7 +22,7 @@ sbt test
 ```
 
 ### Architecture
-
+![image](https://github.com/demonyangyue/RedPacket/blob/master/RedPacket.png)
 ### Further Improvement
 
 * Use akka agent for red packet statistics instead of plain messages.
