@@ -1,4 +1,6 @@
 RedPacket
+
+[![Build Status](https://travis-ci.org/demonyangyue/RedPacket.svg?branch=master)](https://travis-ci.org/demonyangyue/RedPacket)
 ========================
 
 This project is for my [akka in scala](http://demonyangyue.github.io/tags/Akka/) blog series, to simulate the RedPacket generation and distribution program of Alipay or Wechat.
